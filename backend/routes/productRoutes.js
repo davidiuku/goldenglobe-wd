@@ -1,14 +1,16 @@
 const express = require('express');
 const router = express.Router();
-const Product = require('../models/Product');
+const {
+    getProducts,
+    createProduct,
+    updateProduct,
+    deleteProduct,
+} = require('../controllers/productController');
 
-router.get('/', async (req, res) => {
-    try {
-        const products = await Product.find({});
-        res.json(products);
-    } catch (err) {
-        res.status(500).json({ message: 'Server Error' });
-    }
-});
+router.get('/', getProducts);
+router.post('/', createProduct);
+router.put('/:id', updateProduct);
+router.delete('/:id', deleteProduct);
+
 
 module.exports = router;
