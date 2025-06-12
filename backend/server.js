@@ -18,9 +18,21 @@ app.use(express.json());
 const productRoutes = require('./routes/productRoutes');
 app.use('/api/products', productRoutes);
 
+const userRoutes = require('./routes/userRoutes');
+app.use('/api/users', userRoutes)
+
 app.get('/', (req, res) => {
     res.send('API is running...');
 });
 
 const PORT = process.env.PORT || 5000;
 app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
+
+// app.use ((err, req, res, next) => {
+//     const statusCode = res.statusCode === 200 ? 500 : res.statusCode;
+//     res.status(statusCode);
+//     res.json({
+//         message: err.message,
+//         stack: process.env.MODE_ENV === 'production' ? null : err.stack,
+//     });
+// });

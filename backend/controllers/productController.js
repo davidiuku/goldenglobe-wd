@@ -13,7 +13,7 @@ const createProduct = async (req, res) => {
     try {
         const { name, description, price, imageUrl, countInStock } = req.body;
 
-        const products = new Product({
+        const product = new Product({
             name,
             description,
             price,
@@ -21,7 +21,7 @@ const createProduct = async (req, res) => {
             countInStock,
         });
 
-        const createdProduct = await products.save();
+        const createdProduct = await product.save();
         res.status(201).json(createdProduct);
     } catch (err) {
         res.status(500).json({ message: 'Server Error Creating Product' });
