@@ -9,9 +9,23 @@ const getProducts = async (req, res) => {
     }
 }
 
+const getProductById = async (req, res) => {
+    try {
+        const product = await Product.findById(req.params.id);
+
+        if (product) {
+            res.json(product);
+        } else {
+            res.status(404).json({ message: 'Product not found' });
+        }
+    } catch (err) {
+        res.status(500).json({ message: 'Server Error' });
+    }
+}
+
 const createProduct = async (req, res) => {
     try {
-        const { name, description, price, imageUrl, countInStock } = req.body;
+        const { name, description, price, imageUrl, countInStock, itemSpecifications } = req.body;
 
         const product = new Product({
             name,
@@ -19,6 +33,7 @@ const createProduct = async (req, res) => {
             price,
             imageUrl,
             countInStock,
+            itemSpecifications,
         });
 
         const createdProduct = await product.save();
@@ -30,7 +45,7 @@ const createProduct = async (req, res) => {
 
 const updateProduct = async (req, res) => {
     try {
-        const { name, description, price, imageUrl, countInStock } = req.body;
+        const { name, description, price, imageUrl, countInStock, itemSpecifications } = req.body;
         const product = await Product.findById(req.params.id);
 
         if (product) {
@@ -39,6 +54,7 @@ const updateProduct = async (req, res) => {
             product.price = price || product.price;
             product.imageUrl = imageUrl || product.imageUrl;
             product.countInStock = countInStock || product.countInStock;
+            product.itemSpecifications = itemSpecification || product.itemSpecifications
 
             const updatedProduct = await product.save();
             res.json(updatedProduct);
@@ -71,4 +87,5 @@ module.exports = {
     createProduct,
     updateProduct,
     deleteProduct,
+    getProductById,
 };
