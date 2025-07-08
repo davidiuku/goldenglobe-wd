@@ -16,13 +16,14 @@ app.use(morgan('dev'));
 app.use(express.json());
 
 const productRoutes = require('./routes/productRoutes');
-app.use('/api/products', productRoutes);
-
 const userRoutes = require('./routes/userRoutes');
-app.use('/api/users', userRoutes)
-
 const cartRoutes = require('./routes/cartRoutes');
+const orderRoutes = require('./routes/orderRoutes');
+
+app.use('/api/products', productRoutes);
+app.use('/api/users', userRoutes)
 app.use('/api/cart', cartRoutes)
+app.use('/api/orders', orderRoutes)
 
 app.get('/', (req, res) => {
     res.send('API is running...');

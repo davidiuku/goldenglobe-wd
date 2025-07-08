@@ -1,11 +1,6 @@
 const Cart = require('../models/Cart');
 const Product = require('../models/Product');
 const asyncHandler = require('express-async-handler');
-    // getCart,
-    // addToCart,
-    // removeFromCart,
-    // updateCartItem,
-    // clearCart,
 
 const getCart = asyncHandler(async  (req, res) => {
     let cart = await Cart.findOne({ user: req.user_id }).populate('items.product');
