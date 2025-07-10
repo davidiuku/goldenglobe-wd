@@ -3,14 +3,17 @@
 import { useEffect, useState } from 'react';
 import api from '@/lib/axios';
 import { Product } from '@/lib/types'
+import Image from 'next/image';
+import ProductCard from './ProductCard';
 
-export default function HomePage() {
+const HomePage = () => {
   const [products, setProducts] = useState<Product[]>([]);
 
   useEffect(() => {
     const fetchProducts = async () => {
       try {
         const { data } = await api.get('/products');
+        console.log(data)
         setProducts(data);
       } catch (error) {
         console.error('Failed to fetch products:', error);
@@ -21,15 +24,16 @@ export default function HomePage() {
   }, []);
 
   return (
-    <main className="flex flex-col gap-[32px] row-start-2 items-center sm:items-start">
-      <h1>Product List</h1>
-      <ul>
+    <main className="flex justify-center gap-[32px] row-start-2 items-center sm:items-start">
+      <ul className="divide-y divide-gray-300">
         {products.map((product) => (
-          <li key={product._id} className="mb-2">
-            <strong>{product.name}</strong>: ${product.price}
+          <li key={product._id} className="w-full">
+            <ProductCard product={product} />
           </li>
         ))}
       </ul>
     </main>
   );
 }
+
+export default HomePage;
