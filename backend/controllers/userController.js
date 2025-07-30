@@ -20,7 +20,7 @@ const registerUser = asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            token: generateToken(user._id),
+            token: generateToken(user),
         });
     } else {
         res.status(400);
@@ -39,7 +39,7 @@ const loginUser =  asyncHandler(async (req, res) => {
             name: user.name,
             email: user.email,
             isAdmin: user.isAdmin,
-            token: generateToken(user._id),
+            token: generateToken(user),
         });
     } else {
         res.status(401);

@@ -3,6 +3,8 @@
 import { createContext, useContext, useEffect, useState } from 'react';
 import { User, Login, SignUp } from '@/lib/types';
 import { loginAPI, registerAPI } from '@/services/AuthService';
+import { jwtDecode } from 'jwt-decode';
+import type { JwtPayload } from '@/lib/types';
 
 interface AuthContextType {
   user: User | null;
@@ -20,7 +22,6 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
 
   const login = async (credentials: Login) => {
     const data = await loginAPI(credentials);
-    console.log("Login response:", data);
     setUser(data);
   };
 
@@ -37,7 +38,19 @@ export const AuthProvider = ({ children }: { children: React.ReactNode }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
     if (token) {
-      setUser({ _id: '', name: '', email: '', isAdmin: false, token });
+      try {
+        const decoded = jwtDecode<JwtPayload>(token);
+        setUser({
+            _id: decoded._id,
+            name: decoded.name,
+            email: decoded.email,
+            isAdmin: decoded.isAdmin,
+            token,
+        });
+      } catch (error) {
+        console.error("Invalid token", error);
+        setUser(null);
+      }
     }
   }, []);
 

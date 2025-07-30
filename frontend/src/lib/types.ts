@@ -32,3 +32,12 @@ export interface AuthContextType {
     setUser: (user: User | null) => void;
     isLoggedIn: boolean;
 }
+
+export interface JwtPayload {
+    _id: string;
+    name: string;
+    email: string;
+    isAdmin: boolean;
+    iat?: number;
+    exp?: number;
+}
