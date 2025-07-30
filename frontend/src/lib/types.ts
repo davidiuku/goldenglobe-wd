@@ -5,6 +5,10 @@ export interface Product {
     price: number;
     imageUrl: string;
     countInStock: number;
+    itemSpecifications: {
+        label: string;
+        value: string;
+    }[];
 }
 
 export interface Login {

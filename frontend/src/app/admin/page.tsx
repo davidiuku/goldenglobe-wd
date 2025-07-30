@@ -33,7 +33,6 @@ const AdminPage = () => {
       updatedSpecs[parseInt(index)][key as 'value'] = value;
       setNewProduct({ ...newProduct, itemSpecifications: updatedSpecs });
     }
-    console.log(newProduct)
     setNewProduct({ ...newProduct, [e.target.name]: e.target.value });
   }
 
@@ -212,7 +211,7 @@ const AdminPage = () => {
         <tbody>
           {products.map((product) => (
             <tr key={product._id} className="border-t">
-              <td className="p-2 border">{product.name}</td>
+              <td className="p-2 border"> <Link href={`/products/${product._id}`}>{product.name}</Link></td>
               <td className="p-2 border">${product.price}</td>
               <td className="p-2 border">{product.countInStock}</td>
               <td className="p-2 border">
