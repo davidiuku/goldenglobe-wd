@@ -25,6 +25,7 @@ export interface User {
     name: string;
     email: string;
     isAdmin: boolean;
+    token?: string;
 }
 export interface AuthContextType {
     user: User | null;
